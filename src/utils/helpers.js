@@ -1,0 +1,1 @@
+export const adminId = ['116950682589434455363']

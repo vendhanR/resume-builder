@@ -7,17 +7,18 @@ import { PuffLoader } from "react-spinners";
 import { MdLogout } from "react-icons/md";
 import { auth } from "../config/firebase.config";
 import { useQueryClient } from "react-query";
+import { adminId } from "../utils/helpers";
 const Header = () => {
   const { data, error, isLoading } = useUser();
   const [isMenu, setIsMenu] = useState(false);
 
-  const navigate  = useNavigate();
-  const queryClient = useQueryClient()
-  const signOutUser = async ( ) =>  {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const signOutUser = async () => {
     await auth.signOut().then(() => {
-      queryClient.setQueriesData('user',null)
-    })
-  }
+      queryClient.setQueriesData("user", null);
+    });
+  };
 
   return (
     <header className="flex items-center justify-even lg:px-8  px-4 py-3 w-full gap-10 border-b border-gray-300 bg-primary z-50 sticky top-0">
@@ -42,32 +43,33 @@ const Header = () => {
         <>
           {data ? (
             <>
-            <AnimatePresence>
-              
-              <motion.div
-                onClick={() => setIsMenu(!isMenu)}
-                className="w-11 h-11 rounded flex items-center justify-center relative"
-              >
-                {data.photoURL ? (
-                  <img
-                    src={data.photoURL}
-                    className="rounded-md w-full h-full object-cover cursor-pointer "
-                    referrerPolicy="no-referrer"
-                    alt="logo"
-                  />
-                ) : (
-                  <div className="flex justify-center items-center bg-green-800 rounded-lg h-full w-full cursor-pointer ">
-                    <p className="text-white text-lg ">{data.email[0]}</p>
-                  </div>
-                )}
-              </motion.div>
-              {/* dropdown  */}
+              <AnimatePresence>
+                <motion.div
+                  onClick={() => setIsMenu(!isMenu)}
+                  className="w-11 h-11 rounded flex items-center justify-center relative"
+                >
+                  {data.photoURL ? (
+                    <img
+                      src={data.photoURL}
+                      className="rounded-md w-full h-full object-cover cursor-pointer "
+                      referrerPolicy="no-referrer"
+                      alt="logo"
+                    />
+                  ) : (
+                    <div className="flex justify-center items-center bg-green-800 rounded-lg h-full w-full cursor-pointer ">
+                      <p className="text-white text-lg ">{data.email[0]}</p>
+                    </div>
+                  )}
+                </motion.div>
+                {/* dropdown  */}
                 {isMenu && (
                   <motion.div
-                  initial={{opacity:0,y:20}}
-                  animate={{opacity:1,y:0}}
-                  exit={{opacity:0,y:20}}
-                  className="absolute top-16 bg-slate-50 right-2 px-4 py-3 flex items-center justify-start flex-col gap-3  w-52 pt-8 shadow-lg">
+                  onMouseLeave={() => setIsMenu(false)}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    className="absolute top-16 bg-slate-50 right-2 px-4 py-3 flex items-center justify-start flex-col gap-3  w-52 pt-8 shadow-lg"
+                  >
                     <div className="w-11 h-11 rounded flex items-center justify-center  relative flex-col">
                       {data.photoURL ? (
                         <img
@@ -94,26 +96,28 @@ const Header = () => {
                       >
                         My Account
                       </Link>
-                      <Link
-                        to={"/template/create"}
-                        className="text-gray-400 hover:text-gray-950 whitespace-nowrap text-base"
-                      >
-                        Add New Template
-                      </Link>
+                      {adminId.includes(data?.uid) && (
+                        <Link
+                          to={"/template/create"}
+                          className="text-gray-400 hover:text-gray-950 whitespace-nowrap text-base"
+                        >
+                          Add New Template
+                        </Link>
+                      )}
                     </div>
-                    <div className="w-full border-t border-gray-300 flex items-center justify-between px-2 pt-2 text-gray-400 hover:text-gray-950 "
-                    onClick={signOutUser}
+                    <div
+                      className="w-full border-t border-gray-300 flex items-center justify-between px-2 pt-2 text-gray-400 hover:text-gray-950 "
+                      onClick={signOutUser}
                     >
                       <p>logout</p>
                       <MdLogout />
                     </div>
                   </motion.div>
                 )}
-              
               </AnimatePresence>
             </>
           ) : (
-            <Link to={'/auth'}>
+            <Link to={"/auth"}>
               <motion.div
                 whileTap={{ scale: 0.9 }}
                 className="bg-gray-200 hover:text-white hover:bg-gray-400 px-4 py-2 rounded border border-gray-300 duration-200 text-gray-600"
@@ -122,7 +126,6 @@ const Header = () => {
               </motion.div>
             </Link>
           )}
-          
         </>
       )}
     </header>
