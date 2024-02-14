@@ -8,15 +8,31 @@ import { MdLogout } from "react-icons/md";
 import { auth } from "../config/firebase.config";
 import { useQueryClient } from "react-query";
 import { adminId } from "../utils/helpers";
+import useFilters from "../Hooks/useFilters";
+import { fadeInFadeOut } from "../animation";
 const Header = () => {
   const { data, error, isLoading } = useUser();
   const [isMenu, setIsMenu] = useState(false);
 
-  const navigate = useNavigate();
+  const { data: filterData } = useFilters();
+
   const queryClient = useQueryClient();
   const signOutUser = async () => {
     await auth.signOut().then(() => {
       queryClient.setQueriesData("user", null);
+    });
+  };
+
+  const handleSearch = (e) => {
+    queryClient.setQueryData("globalFilter", {
+      ...queryClient.getQueryDefaults("globalFilter"),
+      searchTerm: e.target.value,
+    });
+  };
+  const handleClearSearch = () => {
+    queryClient.setQueryData("globalFilter", {
+      ...queryClient.getQueryDefaults("globalFilter"),
+      searchTerm: "",
     });
   };
 
@@ -29,10 +45,22 @@ const Header = () => {
       {/* input */}
       <div className="flex  border flex-1 items-center justify-between bg-gray-200 border-gray-300 px-4 py-1 rounded-md">
         <input
+          onChange={handleSearch}
+          value={filterData?.searchTerm ? filterData?.searchTerm : ""}
           type="text"
           className="flex-1 border-none   outline-none bg-transparent h-9 "
           placeholder="Search here..."
         />
+        <AnimatePresence>
+          {filterData?.searchTerm.length > 0 && (
+            <motion.div 
+            {...fadeInFadeOut}
+            onClick={handleClearSearch}
+            className="w-5 h-5 pb-1 flex justify-center items-center bg-gray-300 rounded-md cursor-pointer active:scale-75 duration-150">
+              <p className="text-lg text-black">x</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
       {/* profile */}
       {isLoading ? (
@@ -64,7 +92,7 @@ const Header = () => {
                 {/* dropdown  */}
                 {isMenu && (
                   <motion.div
-                  onMouseLeave={() => setIsMenu(false)}
+                    onMouseLeave={() => setIsMenu(false)}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}

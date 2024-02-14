@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import Header from '../components/Header'
+import {Header} from '../components'
 import { MainSpinner } from '../components'
 import { Route, Routes } from 'react-router-dom'
 import HomeContainer from '../containers/HomeContainer'
