@@ -1,6 +1,6 @@
 import { toast } from "react-toastify"
 import { auth, db } from "../config/firebase.config"
-import { arrayRemove, arrayUnion, collection, doc, onSnapshot, orderBy, query, setDoc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, collection, doc, getDoc, onSnapshot, orderBy, query, setDoc, updateDoc } from 'firebase/firestore'
 
 export const getUserDetail = () => {
     return new Promise((resolve, resject) => {
@@ -76,4 +76,14 @@ export const saveToFavourites = async (user, data) => {
             favourites: arrayRemove(user?.uid)
         }).then(() => toast.error("Removed from favourits")).catch((error) => toast.error(`Error ${error.message}`))
     }
-} 
+}
+
+export const getTemplateDetails = async (templateId) => {
+
+    return new Promise(async (resolve, reject) => {
+        const unsubscribe = onSnapshot(doc(db, 'Templates', templateId), (doc) => {
+            resolve(doc.data())
+        })
+        return unsubscribe;
+    })
+}

@@ -10,11 +10,14 @@ import {
 import useUser from "../Hooks/useUser";
 import { saveToCollection, saveToFavourites } from "../api";
 import useTemplates from "../Hooks/useTemplates";
+import { useNavigate } from "react-router-dom";
 
 const TemplateDesing = ({ data, index }) => {
   const [isTemplateHover, setIsTemplateHover] = useState(false)
   const { data: user, refetch: userRefetch } = useUser();
   const { refetch: templateRefetch } = useTemplates();
+
+  const navigate = useNavigate()
 
   const addToCollection = async (e) => {
     e.stopPropagation();
@@ -27,6 +30,10 @@ const TemplateDesing = ({ data, index }) => {
     await saveToFavourites(user, data);
     templateRefetch();
   };
+
+  const navigateToTemplateDetailsView =() => {
+    navigate(`/templateDetails/${data?._id}`,{replace : true})
+  }
 
   return (
     <motion.div {...scaleInOut(index)} key={data?._id}>
@@ -41,7 +48,9 @@ const TemplateDesing = ({ data, index }) => {
         />
 
         <AnimatePresence>
-          {isTemplateHover && <motion.div className="absolute inset-0 bg-[rgba(0,0,0,0.4)] flex flex-col items-end justify-start px-3 py-2 z-50 cursor-pointer ">
+          {isTemplateHover && <motion.div
+          onClick={ navigateToTemplateDetailsView }
+          className="absolute inset-0 bg-[rgba(0,0,0,0.4)] flex flex-col items-end justify-start px-3 py-2 z-50 cursor-pointer ">
             <div className="flex flex-col items-end justify-start gap-4 w-full">
               <InnerBoxDesign
                 label={

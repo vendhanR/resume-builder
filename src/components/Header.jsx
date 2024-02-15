@@ -37,7 +37,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex items-center justify-even lg:px-8  px-4 py-3 w-full gap-10 border-b border-gray-300 bg-primary z-50 sticky top-0">
+    <header className="flex items-center justify-even lg:px-8  px-4 py-3 w-full gap-10 border-b border-gray-300 bg-primary z-50 sticky top-0 bg-gray-100">
       {/* logo */}
       <Link to={"/"}>
         <img src={Logo} className="w-8" />

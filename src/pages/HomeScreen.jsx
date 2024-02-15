@@ -7,7 +7,7 @@ import {CreateResume, CreateTemplate, TemplateDesingPinDetails, UserProfile} fro
 
 const HomeScreen = () => {
   return (
-    <div className='w-full flex flex-col '>
+    <div className='w-full flex flex-col px-3'>
       <Header />
       <main className='flex '>
        
@@ -17,7 +17,7 @@ const HomeScreen = () => {
             <Route path='/template/create' element={<CreateTemplate/>}/>
             <Route path='/UserProfile/:uid' element={<UserProfile/>}/>
             <Route path='/resume/*' element={<CreateResume/>}/>
-            <Route path='/resumeDetails/:templateID' element={<TemplateDesingPinDetails/>}/>
+            <Route path='/templateDetails/:templateID' element={<TemplateDesingPinDetails/>}/>
           </Routes>
        </Suspense>
       </main>
