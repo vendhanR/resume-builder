@@ -1,5 +1,6 @@
+import { toast } from "react-toastify"
 import { auth, db } from "../config/firebase.config"
-import { collection, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, collection, doc, onSnapshot, orderBy, query, setDoc, updateDoc } from 'firebase/firestore'
 
 export const getUserDetail = () => {
     return new Promise((resolve, resject) => {
@@ -46,7 +47,33 @@ export const getTemplates = () => {
             (error) => {
                 reject(error)
             }
-            )
+        )
         return unsubscribe;
     })
 }
+
+export const saveToCollection = async (user, data) => {
+    const docRef = doc(db, "users", user?.uid);
+    if (!user?.collection?.includes(data?._id)) {
+        await updateDoc(docRef, {
+            collection: arrayUnion(data?._id)
+        }).then(() => toast.success("Added to Collection")).catch((error) => toast.error(`Error ${error.message}`))
+    } else {
+        await updateDoc(docRef, {
+            collection: arrayRemove(data?._id)
+        }).then(() => toast.error("Removed from Collection")).catch((error) => toast.error(`Error ${error.message}`))
+    }
+};
+
+export const saveToFavourites = async (user, data) => {
+    const docRef = doc(db, "Templates", data?._id);
+    if (!data?.favourites?.includes(user?.uid)) {
+        await updateDoc(docRef, {
+            favourites: arrayUnion(user?.uid)
+        }).then(() => toast.success("Added to favourits")).catch((error) => toast.error(`Error ${error.message}`))
+    } else {
+        await updateDoc(docRef, {
+            favourites: arrayRemove(user?.uid)
+        }).then(() => toast.error("Removed from favourits")).catch((error) => toast.error(`Error ${error.message}`))
+    }
+} 

@@ -4,13 +4,13 @@ import { MdLayersClear } from "react-icons/md";
 import { FiltersData } from "../utils/helpers";
 import { isClearAllMouseEnterAndLeave } from "../animation";
 import useFilters from "../Hooks/useFilters";
-import { QueryClient, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 
 const Filters = () => {
 
   const [isClearAllMouseHover, setIsClearAllMouseHover] = useState(false);
 
-  const {data: filterData , isError , isLoading, refetch} = useFilters()
+  const {data: filterData } = useFilters()
 
   const queryClient = useQueryClient();
 
