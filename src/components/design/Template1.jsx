@@ -338,13 +338,79 @@ const Template1 = () => {
     }
   };
 
-  const generatePDF = async () => {};
+  const generatePDF = async () => {
+    const element = resumeRef.current;
+    if(!element) {
+      toast.error("Unable to capture the content at a moment");
+      return
+    }
 
-  const generateImage = async () => {};
+    htmlToImage.toPng(element).then(dataUrl => {
+      const a4Width = 210;
+      const a4Height = 297;
 
-  const generatePng = async () => {};
+      var pdf = new jsPDF({
+        orientation : 'p',
+        unit : 'mm',
+        format : [a4Width, a4Height]
+      })
 
-  const generateSvg = async () => {};
+      const aspectRatio = a4Width / a4Height;
+      const imgWidth = a4Width;
+      const imgHeight = a4Width / aspectRatio;
+
+      const verticalMargin = (a4Height - imgHeight)/2 
+
+      pdf.addImage(dataUrl,'PNG', 0, verticalMargin, imgWidth, imgHeight);
+      pdf.save("resume.pdf")
+    }).catch(err => toast.error(`Error : ${err.message}`))
+
+  };
+
+  const generateImage = async () => {
+    const element = resumeRef.current;
+    if(!element) {
+      toast.error("Unable to capture the content at a moment");
+      return
+    }
+
+    htmlToImage.toJpeg(element).then(dataUrl => {
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = "resume.jpeg"
+      a.click();
+    }).catch(err => toast.error(`Error ${err.message}`))
+  };
+
+  const generatePng = async () => {
+    const element = resumeRef.current;
+    if(!element) {
+      toast.error("Unable to capture the content at a moment");
+      return
+    }
+
+    htmlToImage.toJpeg(element).then(dataUrl => {
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = "resume.png"
+      a.click();
+    }).catch(err => toast.error(`Error ${err.message}`))
+  };
+
+  const generateSvg = async () => {
+    const element = resumeRef.current;
+    if(!element) {
+      toast.error("Unable to capture the content at a moment");
+      return
+    }
+
+    htmlToImage.toSvg(element).then(dataUrl => {
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = "resume.svg"
+      a.click();
+    }).catch(err => toast.error(`Error ${err.message}`))
+  };
 
   if (resume_isLoading) return <MainSpinner />;
 
