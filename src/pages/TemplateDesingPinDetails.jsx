@@ -173,7 +173,7 @@ const TemplateDesingPinDetails = () => {
           {/* edit option */}
           {user && (
             <Link
-              to={`/resume/${data?.name}?templateID${templateID}`}
+              to={`/resume/${data?.name}?templateID=${templateID}`}
               className="w-full px-4 py-2 rounded-md flex justify-center items-center bg-emerald-500 "
             >
               <p className="text-lg text-white font-semibold ">

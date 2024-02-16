@@ -50,7 +50,7 @@ const TemplateDesing = ({ data, index }) => {
         <AnimatePresence>
           {isTemplateHover && <motion.div
           onClick={ navigateToTemplateDetailsView }
-          className="absolute inset-0 bg-[rgba(0,0,0,0.4)] flex flex-col items-end justify-start px-3 py-2 z-50 cursor-pointer ">
+          className="absolute inset-0 bg-[rgba(0,0,0,0.4)] flex flex-col items-end justify-start px-3 py-2 z-10 cursor-pointer ">
             <div className="flex flex-col items-end justify-start gap-4 w-full">
               <InnerBoxDesign
                 label={
