@@ -119,7 +119,7 @@ const Header = () => {
                     {/* menu */}
                     <div className="w-full flex flex-col items-start  gap-5 pt-6">
                       <Link
-                        to={"/profile"}
+                        to={`/profile/${data?.uid}`}
                         className="text-gray-400 hover:text-gray-950 whitespace-nowrap text-base"
                       >
                         My Account
