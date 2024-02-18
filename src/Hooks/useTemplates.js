@@ -2,7 +2,7 @@ import { useQuery } from "react-query"
 import { getTemplates } from "../api";
 
 const useTemplates = () => {
-    const {data, isLoading, isError , refetch} = useQuery(
+    const { data, isLoading, isError, refetch } = useQuery(
         'Templates',
         async () => {
             try {
@@ -12,14 +12,16 @@ const useTemplates = () => {
                 console.log(error)
             }
         },
-        {refetchOnWindowFocus : false,
-        
-            onerror : (error) => {
+        {
+            refetchOnWindowFocus: false,
+
+            onerror: (error) => {
                 console.log('Failed to fetch templates: ' + error.message)
-            }},
-        
+            }
+        },
+
     )
-    return {data, isLoading, isError , refetch} 
+    return { data, isLoading, isError, refetch }
 }
 
 export default useTemplates;

@@ -126,11 +126,11 @@ const CreateTemplate = () => {
     const _doc = {
       _id: id,
       title: inputData.title,
-      imageURl: imageAsset.uri,
+      imageURL: imageAsset.uri,
       tags: selectedTags,
       name:
-        templates && templates.length > 0
-          ? `Template${templates.length + 1}`
+        templates && templates?.length > 0
+          ? `Template${templates?.length + 1}`
           : "Template1",
       timestamp: timestamp,
     };
@@ -148,7 +148,7 @@ const CreateTemplate = () => {
   };
 
   const handleAnResumeTemplateDelete = async (template) => {
-    const deleteRef = ref(storage, template.imageURl);
+    const deleteRef = ref(storage, template.imageURL);
     await deleteObject(deleteRef)
       .then(async () => {
         await deleteDoc(doc(db, "Templates", template._id));
@@ -179,8 +179,8 @@ const CreateTemplate = () => {
             TemplateID :{" "}
           </p>
           <p className="text-sm capitalize text-dark">
-            {templates && templates.length > 0
-              ? `Template${templates.length + 1}`
+            {templates && templates?.length > 0
+              ? `Template${templates?.length + 1}`
               : "Template1"}
           </p>
         </div>
@@ -244,8 +244,8 @@ const CreateTemplate = () => {
             <div
               key={i}
               onClick={() => handleSelectTags(tag)}
-              className={`px-1 py-1 border border-gray-500 rounded-sm cursor-pointer ${
-                selectedTags.includes(tag) ? "bg-blue-500 text-white" : ""
+              className={`px-1 py-1 border hover:text-blue-700 border-gray-500 rounded-sm cursor-pointer ${
+                selectedTags.includes(tag) ? "bg-blue-500 text-white hover:text-white" : ""
               }`}
             >
               <p className="text-[8px] 2xl:text-[20px]">{tag}</p>
@@ -266,7 +266,7 @@ const CreateTemplate = () => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {templates && templates.length > 0 ? (
+            {templates && templates?.length > 0 ? (
               <React.Fragment>
                 <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {templates.map((template) => (
@@ -275,7 +275,7 @@ const CreateTemplate = () => {
                       className="overflow-hidden rounded-md w-full h-[350px] relative p-2 bg-gray-300 "
                     >
                       <img
-                        src={template?.imageURl}
+                        src={template?.imageURL}
                         alt="resume template"
                         className="object-cover w-full h-full"
                       />

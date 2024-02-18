@@ -31,15 +31,18 @@ const HomeContainer = () => {
   );
 };
 
-const RenderTemplate = ({ templates }) => {
+ const RenderTemplate = ({ templates }) => {
   return (
     <React.Fragment>
-      {templates && templates.length > 0 ? (
+      {templates && templates?.length > 0 ? (
         <React.Fragment>
           <AnimatePresence>
             {templates &&
               templates.map((template, index) => (
-                <TemplateDesing data={template} key={template?._id} index={index}/>
+                <TemplateDesing 
+                data={template} 
+                key={template?._id}
+                index={index}/>
               ))}
           </AnimatePresence>
         </React.Fragment>

@@ -15,18 +15,6 @@ const CreateResume = () => {
           />
         ))}
       </Routes>
-
-      {/* routes section */}
-      {/* <div className="w-full flex items-center  gap-2 pb-2">
-        <Link
-          to={"/"}
-          className="flex items-center justify-center gap-2 text-gray-600"
-        >
-          <FaHouse /> Home
-        </Link>
-        <p>/</p> */}
-        {/* <p>{data?.name}</p> */}
-      {/* </div> */}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { toast } from "react-toastify"
 import { auth, db } from "../config/firebase.config"
-import { arrayRemove, arrayUnion, collection, doc, getDoc, onSnapshot, orderBy, query, setDoc, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, collection, doc, onSnapshot, orderBy, query, setDoc, updateDoc } from 'firebase/firestore'
 
 export const getUserDetail = () => {
     return new Promise((resolve, resject) => {
@@ -39,6 +39,7 @@ export const getTemplates = () => {
             collection(db, 'Templates'),
             orderBy('timestamp', 'asc')
         )
+        console.log("getTemplates -------->", templatesQuery)
         const unsubscribe = onSnapshot(templatesQuery,
             (querySnap) => {
                 const templates = querySnap.docs.map((doc) => doc.data());
@@ -91,33 +92,28 @@ export const getTemplateDetails = async (templateId) => {
 
 export const getTemplateDetailEditByUser = (uid, id) => {
     return new Promise((resolve, reject) => {
-      const unsubscribe = onSnapshot(
-        doc(db, "users", uid, "resumes", id),
-        (doc) => {
-          resolve(doc.data());
-        }
-      );
-  
-      return unsubscribe;
+        const unsubscribe = onSnapshot(
+            doc(db, "users", uid, "resumes", id),
+            (doc) => {
+                resolve(doc.data());
+            }
+        );
+
+        return unsubscribe;
     });
 };
 
 export const getSavedResumes = (uid) => {
-    console.log("116950682589434455363" === uid)
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject)=>{
         const templatesQuery = query(
-            collection(db, 'users',uid,'resumes'),
-            orderBy('timestamp', 'asc')
-        )
-        const unsubscribe = onSnapshot(templatesQuery,
-            (querySnap) => {
-                const templates = querySnap.docs.map((doc) => doc.data());
-                resolve(templates)
-            },
-            (error) => {
-                reject(error)                       
-            }
-        )
+            collection(db, 'users', uid , 'resumes'),
+            orderBy('timeStamp', 'asc')
+        );
+
+        const unsubscribe = onSnapshot(templatesQuery, (querySnap) => {
+            const templates = querySnap.docs.map((doc) => doc.data())
+            resolve(templates)
+        });
         return unsubscribe;
     })
 }

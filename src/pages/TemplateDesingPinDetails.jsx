@@ -68,7 +68,7 @@ const TemplateDesingPinDetails = () => {
         {/* left section */}
         <div className="col-span-1 sm:col-span-7 lg:col-span-3 flex flex-col items-start justify-start gap-3 max-w-full ">
           <img
-            src={data?.imageURl}
+            src={data?.imageURL}
             alt=""
             className="max-w-full  object-contan rounded-md "
           />
@@ -80,12 +80,12 @@ const TemplateDesingPinDetails = () => {
               </p>
 
               {/* likes */}
-              {data?.favourites.length > 0 && (
+              {data?.favourites?.length > 0 && (
                 <div className="flex items-center justify-center gap-1">
                   <BiSolidHeart className="text-red-500" />
                   <p className="text-sm font-semibold text-gray-500">
                     {" "}
-                    {data?.favourites.length}Likes
+                    {data?.favourites?.length}Likes
                   </p>
                 </div>
               )}
@@ -196,7 +196,7 @@ const TemplateDesingPinDetails = () => {
       </div>
 
       {/* suggection */}
-      {templates?.filter((temp) => temp?._id !== data?._id).length> 0 && (
+      {templates?.filter((temp) => temp?._id !== data?._id)?.length> 0 && (
         <div className="w-full flex justify-start items-start flex-col py-3 gap-4 ">
           <p className="text-lg font-semibold text-gray-900">
             You might also like

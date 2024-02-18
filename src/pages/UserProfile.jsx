@@ -1,25 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useUser from "../Hooks/useUser";
-import { BiFolderMinus, BiFolderPlus } from "react-icons/bi";
 import useTemplates from "../Hooks/useTemplates";
 import { AnimatePresence } from "framer-motion";
 import { MainSpinner, TemplateDesing } from "../components";
 import { NoData } from "../assets";
 import { useQuery } from "react-query";
 import { getSavedResumes } from "../api";
-import useSavedResumes from "../Hooks/useSavedResumes";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
+  const navigate = useNavigate();
   const [activeTap, setActiveTap] = useState("Collections");
-  const { data: user, isLoading : isUserLoading } = useUser();
+  const { data: user, isLoading: isUserLoading } = useUser();
   const { data: templates } = useTemplates();
-  
-  const { data: savedResumes } = useQuery(['savedResumes'],()=>
-    getSavedResumes(user?.uid)
-  )
 
-  if(isUserLoading) {
-    return <MainSpinner/>
+  const { data: savedResumes, isLoading: savedResumeIsLoading } = useQuery(
+    ["savedResumes"],
+    () => getSavedResumes(user?.uid)
+  );
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/", { replace: true });
+    }
+  }, [isUserLoading, savedResumeIsLoading, user, navigate]);
+
+  if (isUserLoading || savedResumeIsLoading) {
+    return <MainSpinner />;
   }
 
   return (
@@ -60,7 +67,7 @@ const UserProfile = () => {
           }`}
         >
           <p className="text-base text-gray-500 px-3 py-1 group-hover:text-blue-600 rounded-md ">
-            Collection
+            Collections
           </p>
         </div>
         <div
@@ -76,18 +83,14 @@ const UserProfile = () => {
       </div>
       <div className="w-full flex justify-center gap-4">
         <AnimatePresence>
-          {activeTap === "Collections" ? (
+          {activeTap === "Collections" && (
             <React.Fragment>
-              {user?.collection.length > 0 ? (
-                templates
-                  .filter((temp) => user?.collection.includes(temp?._id))
-                  .map((template, index) => (
-                    <TemplateDesing
-                      data={template}
-                      key={template?._id}
-                      index={index}
-                    />
-                  ))
+              {user?.collection?.length > 0 ? (
+                <RenderTemplate
+                  templates={templates?.filter((temp) =>
+                    user?.collection?.includes(temp?._id)
+                  )}
+                />
               ) : (
                 <div className="w-full flex flex-col items-center justify-center ">
                   <img
@@ -98,14 +101,48 @@ const UserProfile = () => {
                 </div>
               )}
             </React.Fragment>
-          ) : (
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {activeTap === "Resumes" && (
             <React.Fragment>
-              <div>resume</div>
+              {savedResumes && savedResumes?.length > 0 ? (
+                    <RenderTemplate templates={savedResumes} />
+              ) : (
+                <div className="w-full flex flex-col items-center justify-center ">
+                  <img
+                    src={NoData}
+                    className="w-60 h-full object-cover rounded-full"
+                  />
+                  No Data
+                </div>
+              )}
             </React.Fragment>
           )}
         </AnimatePresence>
       </div>
     </div>
+  );
+};
+
+const RenderTemplate = ({ templates }) => {
+  return (
+    <React.Fragment>
+      {templates && templates.length > 0 && (
+        <React.Fragment>
+          <AnimatePresence>
+            {templates &&
+              templates.map((template, index) => (
+                <TemplateDesing
+                  data={template}
+                  key={template?._id}
+                  index={index}
+                />
+              ))}
+          </AnimatePresence>
+        </React.Fragment>
+      )}
+    </React.Fragment>
   );
 };
 

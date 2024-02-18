@@ -12,7 +12,7 @@ import { saveToCollection, saveToFavourites } from "../api";
 import useTemplates from "../Hooks/useTemplates";
 import { useNavigate } from "react-router-dom";
 
-const TemplateDesing = ({ data, index }) => {
+const   TemplateDesing = ({ data, index }) => {
   const [isTemplateHover, setIsTemplateHover] = useState(false)
   const { data: user, refetch: userRefetch } = useUser();
   const { refetch: templateRefetch } = useTemplates();
@@ -42,7 +42,7 @@ const TemplateDesing = ({ data, index }) => {
       onMouseLeave={() => setIsTemplateHover(false)}
        className="w-full h-[300px] 2xl:h-[640px]  rounded-md  bg-gray-200 overflow-hidden relative">
         <img
-          src={data?.imageURl}
+          src={data?.imageURL}
           className="w-full h-full object-contain"
           alt="templates"
         />

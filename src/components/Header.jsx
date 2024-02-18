@@ -52,7 +52,7 @@ const Header = () => {
           placeholder="Search here..."
         />
         <AnimatePresence>
-          {filterData?.searchTerm.length > 0 && (
+          {filterData?.searchTerm?.length > 0 && (
             <motion.div 
             {...fadeInFadeOut}
             onClick={handleClearSearch}
