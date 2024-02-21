@@ -25,14 +25,14 @@ const TemplateDesingPinDetails = () => {
   const { data: user, refetch: userRefetch } = useUser();
   const { data: templates, refetch: templatesRefetch } = useTemplates();
 
-  const addToCollection = async (e) => {
+  const handleAddToCollection = async (e) => {
     e.stopPropagation();
     await saveToCollection(user, data);
     userRefetch();
   };
 
-  const addToFavourites = async (e) => {
-    e.stopPropagation();
+  const handleAddToFavourites = async (e) => {
+    e.stopPropagation();  
     await saveToFavourites(user, data);
     refetch();
   };
@@ -50,7 +50,7 @@ const TemplateDesingPinDetails = () => {
   }
 
   return (
-    <div className="w-full flex items-center justify-start flex-col gap-3 py-3 px-10">
+    <div className="w-full flex items-center justify-start flex-col gap-3 py-3 px-10 ">
       {/* nav section */}
       <div className="w-full flex items-center  gap-2 pb-2">
         <Link
@@ -64,13 +64,13 @@ const TemplateDesingPinDetails = () => {
       </div>
 
       {/* main section */}
-      <div className="w-full grid grid-cols-1 sm:grid-cols-12 gap-2">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-12  gap-2">
         {/* left section */}
-        <div className="col-span-1 sm:col-span-7 lg:col-span-3 flex flex-col items-start justify-start gap-3 max-w-full ">
+        <div className="col-span-1 sm:col-span-7 flex flex-col items-start justify-start gap-3 max-w-full ">
           <img
             src={data?.imageURL}
             alt=""
-            className="max-w-full  object-contan rounded-md "
+            className="max-w-full  object-contain rounded-md "
           />
           <div className="w-full flex flex-col items-start justify-start gap-2">
             {/* title scetion */}
@@ -96,7 +96,7 @@ const TemplateDesingPinDetails = () => {
               {user?.collection?.includes(data?._id) ? (
                 <React.Fragment>
                   <div
-                    onClick={addToCollection}
+                    onClick={handleAddToCollection}
                     className="flex justify-center items-center gap-2 border border-gray-500 px-1 py-1 rounded-md cursor-pointer"
                   >
                     <BiFolderMinus />
@@ -108,7 +108,7 @@ const TemplateDesingPinDetails = () => {
               ) : (
                 <React.Fragment>
                   <div
-                    onClick={addToCollection}
+                    onClick={handleAddToCollection}
                     className="flex justify-center items-center gap-2 border border-gray-500 px-1 py-1 rounded-md cursor-pointer"
                   >
                     <BiFolderPlus />
@@ -122,7 +122,7 @@ const TemplateDesingPinDetails = () => {
               {data?.favourites?.includes(user?.uid) ? (
                 <React.Fragment>
                   <div
-                    onClick={addToFavourites}
+                    onClick={handleAddToFavourites}
                     className="flex justify-center items-center gap-2 border border-gray-500 px-1 py-1 rounded-md cursor-pointer"
                   >
                     <BiFolderMinus />
@@ -134,7 +134,7 @@ const TemplateDesingPinDetails = () => {
               ) : (
                 <React.Fragment>
                   <div
-                    onClick={addToFavourites}
+                    onClick={handleAddToFavourites}
                     className="flex justify-center items-center gap-2 border border-gray-500 px-1 py-1 rounded-md cursor-pointer"
                   >
                     <BiFolderPlus />
@@ -149,7 +149,7 @@ const TemplateDesingPinDetails = () => {
         </div>
 
         {/* right secction */}
-        <div className="max-w-full col-span-1 sm:col-span-5 lg:col-span-4 flex flex-col justify-start items-center gap-3 ">
+        <div className="max-w-full col-span-1 sm:col-span-5  flex flex-col justify-start items-center gap-3 ">
           {/* discover more  */}
           <div
             className="w-full h-56 bg-amber-400 rounded-md overflow-hidden relative "
@@ -171,13 +171,22 @@ const TemplateDesingPinDetails = () => {
           </div>
 
           {/* edit option */}
-          {user && (
+          {user ?  (
             <Link
               to={`/resume/${data?.name}?templateID=${templateID}`}
               className="w-full px-4 py-2 rounded-md flex justify-center items-center bg-emerald-500 "
             >
               <p className="text-lg text-white font-semibold ">
                 Edit this Template
+              </p>
+            </Link>
+          ) : (
+            <Link
+              to={`/auth`}
+              className="w-full px-4 py-2 rounded-md flex justify-center items-center bg-emerald-500 "
+            >
+              <p className="text-lg text-white font-semibold ">
+                Login first before edit 
               </p>
             </Link>
           )}

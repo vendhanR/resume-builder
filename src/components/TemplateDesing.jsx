@@ -19,13 +19,13 @@ const   TemplateDesing = ({ data, index }) => {
 
   const navigate = useNavigate()
 
-  const addToCollection = async (e) => {
+  const handleAddToCollection = async (e) => {
     e.stopPropagation();
     await saveToCollection(user, data);
     userRefetch();
   };
 
-  const addToFavourites = async (e) => {
+  const handleAddToFavourites = async (e) => {
     e.stopPropagation();
     await saveToFavourites(user, data);
     templateRefetch();
@@ -40,7 +40,7 @@ const   TemplateDesing = ({ data, index }) => {
       <div
       onMouseEnter={() => setIsTemplateHover(true)}
       onMouseLeave={() => setIsTemplateHover(false)}
-       className="w-full h-[300px] 2xl:h-[640px]  rounded-md  bg-gray-200 overflow-hidden relative">
+       className="w-full h-full 2xl:h-[640px]  rounded-md  bg-gray-200 overflow-hidden relative">
         <img
           src={data?.imageURL}
           className="w-full h-full object-contain"
@@ -63,7 +63,7 @@ const   TemplateDesing = ({ data, index }) => {
                     ? BiFolderMinus
                     : BiFolderPlus
                 }
-                onHandle={addToCollection}
+                onHandle={handleAddToCollection}
               />
               <InnerBoxDesign
                 label={
@@ -74,7 +74,7 @@ const   TemplateDesing = ({ data, index }) => {
                 Icon={
                   data?.favourites?.includes(user?.uid) ? BiSolidHeart : BiHeart
                 }
-                onHandle={addToFavourites}
+                onHandle={handleAddToFavourites}
               />
             </div>
           </motion.div>}

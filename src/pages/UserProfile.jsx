@@ -19,6 +19,7 @@ const UserProfile = () => {
     () => getSavedResumes(user?.uid)
   );
 
+  
   useEffect(() => {
     if (!user) {
       navigate("/", { replace: true });
@@ -81,7 +82,7 @@ const UserProfile = () => {
           </p>
         </div>
       </div>
-      <div className="w-full flex justify-center gap-4">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-20">
         <AnimatePresence>
           {activeTap === "Collections" && (
             <React.Fragment>

@@ -15,12 +15,12 @@ const Filters = () => {
   const queryClient = useQueryClient();
 
   const handleFiltersClick =(value) => {
-    queryClient.setQueryData("globalFilter", {...queryClient.getQueryDefaults("globalFilter"),searchTerm : value})
+    queryClient.setQueryData("globalFilter", {...queryClient.getQueryData("globalFilter"),searchTerm : value})
   }
 
   const handleClearFilter = () => {
     queryClient.setQueryData("globalFilter", {
-      ...queryClient.getQueryDefaults("globalFilter"),
+      ...queryClient.getQueryData("globalFilter"),
       searchTerm: "",
     });
   };
@@ -38,9 +38,9 @@ const Filters = () => {
           <AnimatePresence>
             <motion.div
               {...isClearAllMouseEnterAndLeave}
-              className="absolute  -top-6 -right-1 bg-gray-200 rounded-md px-1 z-50"
+              className="absolute  -top-6 -right-1 bg-white rounded-md px-1 z-50"
             >
-              <p className="whitespace-nowrap text-xs font-thin text-black">
+              <p className="whitespace-nowrap text-xs text-black">
                 Clear all
               </p>
             </motion.div>

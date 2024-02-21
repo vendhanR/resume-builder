@@ -79,7 +79,6 @@ const CreateTemplate = () => {
             setImageAsset((prev) => ({ ...prev, imageLoading: false }));
           }, 2000);
 
-          console.log("new");
         }
       );
     } else {
@@ -169,7 +168,7 @@ const CreateTemplate = () => {
   return (
     <div className="w-full px-4 lg:px-10 2xl:px-32 py-4 grid grid-cols-1 sm:grid-cols-12  ">
       {/* left container */}
-      <div className="col-span-12 sm:col-span-3  2xl:col-span-4 flex flex-1 justify-start items-center flex-col gap-2 px-2 ">
+      <div className="col-span-12 sm:col-span-5 lg:col-span-3  2xl:col-span-4 flex flex-1 justify-start items-center flex-col gap-2 px-2 ">
         <div className="w-full">
           <p className="text-sm text-gray-400">Create a new template </p>
         </div>
@@ -259,7 +258,7 @@ const CreateTemplate = () => {
           Save
         </button>
       </div>
-      <div className="col-span-12 sm:col-span-9 ">
+      <div className="col-span-12 sm:col-span-7 lg:col-span-9">
         {templateLoading ? (
           <React.Fragment>
             <MainSpinner />
@@ -268,7 +267,7 @@ const CreateTemplate = () => {
           <React.Fragment>
             {templates && templates?.length > 0 ? (
               <React.Fragment>
-                <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="w-full h-full grid grid-cols-1 sm:grid-cols-2  gap-4">
                   {templates.map((template) => (
                     <div
                       key={template._id}
@@ -277,7 +276,7 @@ const CreateTemplate = () => {
                       <img
                         src={template?.imageURL}
                         alt="resume template"
-                        className="object-cover w-full h-full"
+                        className="object-contain w-full h-full"
                       />
                       <motion.div
                         className="absolute z-50 top-4 right-4 bg-red-500 w-8 h-8 rounded-md flex items-center justify-center cursor-pointer"

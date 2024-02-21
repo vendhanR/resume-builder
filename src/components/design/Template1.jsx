@@ -48,7 +48,6 @@ const Template1 = () => {
     imageURL: null,
   });
 
-  console.log(location)
   const {
     data: resumeData,
     isLoading: resume_isLoading,
@@ -305,7 +304,6 @@ const Template1 = () => {
       userProfilePic: imageAsset.imageURL,
       imageURL,
     };
-    console.log(_doc);
     setDoc(doc(db, "users", user?.uid, "resumes", resume_id), _doc)
       .then(() => {
         toast.success(`Data Saved`);
@@ -330,7 +328,6 @@ const Template1 = () => {
     }
     try {
       const dataUrl = await htmlToImage.toJpeg(element);
-      console.log(dataUrl);
       return dataUrl;
     } catch (error) {
       console.error("Oops, something went wrong!", error.message);
@@ -549,7 +546,7 @@ const Template1 = () => {
                         >
                           <input
                             type="text"
-                            readOnly="true"
+                            readOnly={true}
                             name="major"
                             value={edu.major}
                             onChange={(e) => handleEducationChange(i, e)}
@@ -559,7 +556,7 @@ const Template1 = () => {
                           />
 
                           <textarea
-                            readOnly="true"
+                            readOnly={true}
                             className={`text-xs text-gray-200 mt-2  w-full  outline-none border-none ${
                               isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
                             }`}
@@ -613,7 +610,7 @@ const Template1 = () => {
                       onChange={handleChange}
                       name="refererName"
                       type="text"
-                      readOnly="true"
+                      readOnly={true}
                       className={`bg-transparent outline-none border-none text-base tracking-widest capitalize text-gray-100 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
@@ -624,7 +621,7 @@ const Template1 = () => {
                       onChange={handleChange}
                       name="refererRole"
                       type="text"
-                      readOnly="true"
+                      readOnly={true}
                       className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
@@ -647,7 +644,7 @@ const Template1 = () => {
                       onChange={handleChange}
                       name="mobile"
                       type="text"
-                      readOnly="true"
+                      readOnly={true}
                       className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
@@ -669,7 +666,7 @@ const Template1 = () => {
                       onChange={handleChange}
                       name="email"
                       type="text"
-                      readOnly="true"
+                      readOnly={true}
                       className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
@@ -692,7 +689,7 @@ const Template1 = () => {
                       onChange={handleChange}
                       name="website"
                       type="text"
-                      readOnly="true"
+                      readOnly={true}
                       className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
@@ -711,7 +708,7 @@ const Template1 = () => {
                     </div>
 
                     <textarea
-                      readOnly="true"
+                      readOnly={true}
                       className={`text-xs text-gray-200 mt-2 px-3  w-full  outline-none border-none ${
                         isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
                       }`}
@@ -736,7 +733,7 @@ const Template1 = () => {
                 <div className="flex items-center justify-start ">
                   <input
                     type="text"
-                    readOnly="true"
+                    readOnly={true}
                     name="fullname"
                     value={formData.fullname}
                     onChange={handleChange}
@@ -751,7 +748,7 @@ const Template1 = () => {
                   onChange={handleChange}
                   name="professionalTitle"
                   type="text"
-                  readOnly="true"
+                  readOnly={true}
                   className={`bg-transparent outline-none border-none text-xl tracking-widest uppercase text-txtPrimary w-full ${
                     isEdit && "text-white"
                   }`}
@@ -764,7 +761,7 @@ const Template1 = () => {
                   <p className="uppercase text-xl tracking-wider">About Me</p>
                   <div className="w-full h-1 bg-txtDark my-3"></div>
                   <textarea
-                    readOnly="true"
+                    readOnly={true}
                     className={`text-base text-txtPrimary tracking-wider w-full  outline-none border-none ${
                       isEdit ? "bg-gray-200" : "bg-transparent"
                     }`}
@@ -802,7 +799,7 @@ const Template1 = () => {
                                 onChange={(e) => handleExpChange(i, e)}
                                 name="year"
                                 type="text"
-                                readOnly="true"
+                                readOnly={true}
                                 className={` outline-none border-none text-base tracking-eide uppercase text-txtDark w-full ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
@@ -825,7 +822,7 @@ const Template1 = () => {
                                 onChange={(e) => handleExpChange(i, e)}
                                 name="title"
                                 type="text"
-                                readOnly="true"
+                                readOnly={true}
                                 className={` outline-none border-none font-sans text-lg tracking-wide capitalize text-txtDark w-full ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
@@ -836,14 +833,14 @@ const Template1 = () => {
                                 onChange={(e) => handleExpChange(i, e)}
                                 name="companyAndLocation"
                                 type="text"
-                                readOnly="true"
+                                readOnly={true}
                                 className={` outline-none border-none text-sm tracking-wide capitalize text-txtPrimary w-full ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
                               />
 
                               <textarea
-                                readOnly="true"
+                                readOnly={true}
                                 className={`text-xs mt-4  text-txtPrimary tracking-wider w-full  outline-none border-none ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
@@ -896,7 +893,7 @@ const Template1 = () => {
                                   onChange={(e) => handleSkillsChange(i, e)}
                                   name="title"
                                   type="text"
-                                  readOnly="true"
+                                  readOnly={true}
                                   className={` outline-none border-none text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
                                     isEdit ? "bg-gray-200" : "bg-transparent"
                                   }`}

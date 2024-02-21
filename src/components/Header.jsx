@@ -25,25 +25,25 @@ const Header = () => {
 
   const handleSearch = (e) => {
     queryClient.setQueryData("globalFilter", {
-      ...queryClient.getQueryDefaults("globalFilter"),
+      ...queryClient.getQueryData("globalFilter"),
       searchTerm: e.target.value,
     });
   };
   const handleClearSearch = () => {
     queryClient.setQueryData("globalFilter", {
-      ...queryClient.getQueryDefaults("globalFilter"),
+      ...queryClient.getQueryData("globalFilter"),
       searchTerm: "",
     });
   };
 
   return (
-    <header className="flex items-center justify-even lg:px-8  px-4 py-3 w-full gap-10 border-b border-gray-300 bg-primary z-50 sticky top-0 bg-gray-100">
+    <header className="flex items-center  lg:px-8 sm:justify-even py-3 w-full gap-1 sm:gap-3 border-b  border-gray-300 bg-primary z-50 sticky top-0 bg-gray-100">
       {/* logo */}
-      <Link to={"/"}>
+      <Link to={"/"} className="flex-shrink-0">
         <img src={Logo} className="w-8" />
       </Link>
       {/* input */}
-      <div className="flex  border flex-1 items-center justify-between bg-gray-200 border-gray-300 px-4 py-1 rounded-md">
+      <div className="flex  border  items-center justify-between flex-1 bg-gray-200 border-gray-300 px-4 py-1 rounded-md">
         <input
           onChange={handleSearch}
           value={filterData?.searchTerm ? filterData?.searchTerm : ""}
@@ -72,9 +72,11 @@ const Header = () => {
           {data ? (
             <>
               <AnimatePresence>
+
+                <div className="flex-shrink-0">
                 <motion.div
                   onClick={() => setIsMenu(!isMenu)}
-                  className="w-11 h-11 rounded flex items-center justify-center relative"
+                  className="w-11 h-11 rounded flex items-center justify-center relative "
                 >
                   {data.photoURL ? (
                     <img
@@ -96,6 +98,7 @@ const Header = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
+                    key={"menu"}
                     className="absolute top-16 bg-slate-50 right-2 px-4 py-3 flex items-center justify-start flex-col gap-3  w-52 pt-8 shadow-lg"
                   >
                     <div className="w-11 h-11 rounded flex items-center justify-center  relative flex-col">
@@ -142,13 +145,14 @@ const Header = () => {
                     </div>
                   </motion.div>
                 )}
+                </div>
               </AnimatePresence>
             </>
           ) : (
             <Link to={"/auth"}>
               <motion.div
                 whileTap={{ scale: 0.9 }}
-                className="bg-gray-200 hover:text-white hover:bg-gray-400 px-4 py-2 rounded border border-gray-300 duration-200 text-gray-600"
+                className="bg-gray-200 hover:shadow-md px-4 py-2 rounded border border-gray-300 duration-200 text-gray-600"
               >
                 login
               </motion.div>

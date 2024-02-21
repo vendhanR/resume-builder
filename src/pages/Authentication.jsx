@@ -7,7 +7,7 @@ import useUser from "../Hooks/useUser";
 import { useNavigate } from "react-router-dom";
 
 const Authentication = () => {
-  const { data, isLoading } = useUser();
+  const { data, isLoading , error } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +17,12 @@ const Authentication = () => {
   }, [data, isLoading]);
   if (isLoading) {
     return <MainSpinner />;
+  }
+
+  if (error) {
+    return <div className="w-full flex justify-center items-center">
+      <p className="text-2xl">Error: {error.message}</p>
+    </div>; // Render an error message
   }
   return (
     <div className="w-full h-screen flex flex-col overflow-hidden items-start justify-start px-6 py-4 gap-6">

@@ -39,7 +39,6 @@ export const getTemplates = () => {
             collection(db, 'Templates'),
             orderBy('timestamp', 'asc')
         )
-        console.log("getTemplates -------->", templatesQuery)
         const unsubscribe = onSnapshot(templatesQuery,
             (querySnap) => {
                 const templates = querySnap.docs.map((doc) => doc.data());
